@@ -1,0 +1,3 @@
+# runSimulation scripts generated for spectre interactive are not intended to be used for command line.
+export LD_PRELOAD=/software/ECE/IC-618/tools.lnx86/dfII/../lib/64bit/libstdc++.so:$LD_PRELOAD
+ spectre  input.scs +escchars +log resultsdir/psf/spectre.out +inter=mpsc +mpssession=spectre0_9549_1  -format psfxl -raw resultsdir/psf  -I/software/linux/IBM7RF/IBM_PDK/cmrf7sf/V2.0.0.2AM/Spectre/models +lqtimeout 900 -maxw 5 -maxn 5 -64    

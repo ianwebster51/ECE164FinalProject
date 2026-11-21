@@ -1,0 +1,65 @@
+simulator( 'spectre )
+design("/home/linux/ieng6/ECE164_FA26_001/public/FileXchng/ece164fa26_19/ECE164FinalProject/GmIDMATLAB/netlist")
+resultsDir( "/home/linux/ieng6/ECE164_FA26_001/public/FileXchng/ece164fa26_19/ECE164FinalProject/GmIDMATLAB/resultsdir")
+path( "/acsnfs3/software/IBM7RF/IBM_PDK/cmrf7sf/V2.0.0.2AM/Spectre/models" )
+modelFile( 
+    '("design.scs" "")
+    '("wafer.scs" "")
+    '("allModels.scs" "tt")
+)
+
+analysis('dc ?saveOppoint t  ?save "all" ?captab t ?param "Vg"  ?start "0"
+                ?stop "1.8"  ?step "10m"  ?save "all"  ?captab t  )
+
+desVar(	  "Lx" 0.18u	)
+desVar(	  "vdd" 1.8	)
+desVar(	  "Vg" 600m	)
+desVar(	  "Wn" 10u	)
+desVar(	  "Wp" 10u	)
+desVar(	  "p5vonly" 0	)
+desVar(	  "phires" 0	)
+
+envOption(
+	'cmd64bit  t 
+	'analysisOrder  list("dc") 
+)
+saveOption( 'save "all" )
+temp( 27 ) 
+
+; Loop over all lengths
+
+;L = 0.18u
+;while(L < 0.24u
+L_list = list(0.18u 0.2u 0.22u 0.24u 0.26u 0.28u 0.3u 0.35u 0.4u 0.45u 0.5u 0.55u 0.6u 0.65u 0.7u 0.75u 0.8u 0.85u 0.9u 0.95u 1u 1.5u 2u 2.5u 3u 3.5u 4u 4.5u 5u 5.5u 6u 6.5u 7u 7.5u 8u 8.5u 9u 9.5u 10u)
+foreach(L L_list
+	println(L)
+	desVar(	"Lx" L)
+
+	run()
+	;selectResult( 'dcOp )
+	;selectResult( 'dc )
+
+	idp = getData("TP0:id" ?result "dc-dc")
+	gmp = getData("TP0:gm" ?result "dc-dc")
+	gdsp = getData("TP0:gds" ?result "dc-dc")
+	vthp = getData("TP0:vth" ?result "dc-dc")
+	cggp = getData("TP0:cgg" ?result "dc-dc")
+	cdbp = getData("TP0:cdb" ?result "dc-dc")
+	cgdp = getData("TP0:cgd" ?result "dc-dc")
+
+        idn = getData("TN0:id" ?result "dc-dc")
+        gmn = getData("TN0:gm" ?result "dc-dc")
+        gdsn = getData("TN0:gds" ?result "dc-dc")
+        vthn = getData("TN0:vth" ?result "dc-dc")
+        cggn = getData("TN0:cgg" ?result "dc-dc")
+        cdbn = getData("TN0:cdb" ?result "dc-dc")
+        cgdn = getData("TN0:cgd" ?result "dc-dc")
+
+	;ocnPrint(?output fd ?numberNotation 'engineering,  idp, gmp, gdsp, vthp, cggp, cdbp, cdbp, idn, gmn, gdsn, vthn, cggn, cgdn, cdbn)
+	sprintf(fName "Data/gm_id_L=%0.2f.csv" L*1e6)
+	ocnPrint(?output fName ?numberNotation 'engineering,  idp, gmp, gdsp, vthp, cggp, cdbp, cgdp, idn, gmn, gdsn, vthn, cggn, cdbn, cgdn)
+
+;	L = L + 0.02u
+)
+
+;close(fd)

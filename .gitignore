@@ -1,0 +1,8 @@
+# OCEAN/Spectre output folders
+resultsdir
+results/
+psf/
+
+# Logs and generated simulation files
+*.log
+input.scs

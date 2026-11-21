@@ -1,0 +1,19 @@
+// NMOS/PMOS characterization netlist for gm_id.ocn
+// Design variables (Lx, vdd, Vg, Wn, Wp) are NOT defined here: the OCEAN script's
+// desVar()/analysis() calls define and sweep them. Models come from its modelFile().
+simulator lang=spectre
+global 0
+
+VDD (vddn 0) vsource dc=vdd
+
+// NMOS: Vgs = Vg, Vds = vdd/2
+VGN (gn 0) vsource dc=Vg
+VDN (dn 0) vsource dc=vdd/2
+TN0 (dn gn 0 0) nfet l=Lx w=Wn
+
+// PMOS: source/bulk at vdd, so Vsg = Vg, Vsd = vdd/2
+VGP (gp 0) vsource dc=vdd-Vg
+VDP (dp 0) vsource dc=vdd/2
+TP0 (dp gp vddn vddn) pfet l=Lx w=Wp
+
+save TN0:oppoint TP0:oppoint
