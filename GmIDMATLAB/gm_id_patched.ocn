@@ -14,8 +14,8 @@ analysis('dc ?saveOppoint t  ?save "all" ?captab t ?param "Vg"  ?start "0"
 desVar(	  "Lx" 0.18u	)
 desVar(	  "vdd" 1.8	)
 desVar(	  "Vg" 600m	)
-desVar(	  "Wn" 10u	)
-desVar(	  "Wp" 10u	)
+desVar(	  "Wn" 5u	)
+desVar(	  "Wp" 5u	)
 desVar(	  "p5vonly" 0	)
 desVar(	  "phires" 0	)
 
